@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Random Hacks of Kindness 3: One Week Later
+title: "Random Hacks of Kindness #3: One Week Later"
 date: 2011-06-13 03:18
 comments: true
 categories: []

@@ -17,18 +17,19 @@ categories: []
 
 <p>First of all, we'll create a standard Fathom.js presentation.</p>
 
-<pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Fathom.js 3D CSS Transitions&lt;/title&gt;
-    &lt;script src="jquery.min.js"&gt;&lt;/script&gt;
-    &lt;script src="fathom.js"&gt;&lt;/script&gt;
-    &lt;script&gt;
+``` html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fathom.js 3D CSS Transitions</title>
+    <script src="jquery.min.js"></script>
+    <script src="fathom.js"></script>
+    <script>
       $(function(){
         $('#presentation').fathom();
       });
-    &lt;/script&gt;
-    &lt;style type="text/css"&gt;
+    </script>
+    <style type="text/css">
       .slide {
         width: 800px;
         height: 600px;
@@ -45,37 +46,38 @@ categories: []
         font-family: Georgia, Times New Roman, serif;
         font-size: 24px;
       }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
+    </style>
+  </head>
+  <body>
 
-    &lt;div id="presentation"&gt;
+    <div id="presentation">
 
-      &lt;div class="slide"&gt;
-        &lt;div class="content"&gt;
-          &lt;h1&gt;Hello there&lt;/h1&gt;
-          &lt;p&gt;This is a test slide. In 3D.&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+      <div class="slide">
+        <div class="content">
+          <h1>Hello there</h1>
+          <p>This is a test slide. In 3D.</p>
+        </div>
+      </div>
 
-      &lt;div class="slide"&gt;
-        &lt;div class="content"&gt;
-          &lt;h1&gt;Hello there&lt;/h1&gt;
-          &lt;p&gt;This is a test slide. In 3D.&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+      <div class="slide">
+        <div class="content">
+          <h1>Hello there</h1>
+          <p>This is a test slide. In 3D.</p>
+        </div>
+      </div>
 
-      &lt;div class="slide"&gt;
-        &lt;div class="content"&gt;
-          &lt;h1&gt;Hello there&lt;/h1&gt;
-          &lt;p&gt;This is a test slide. In 3D.&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+      <div class="slide">
+        <div class="content">
+          <h1>Hello there</h1>
+          <p>This is a test slide. In 3D.</p>
+        </div>
+      </div>
 
-    &lt;/div&gt;
+    </div>
 
-  &lt;/body&gt;
-&lt;/html&gt;</pre>
+  </body>
+</html>
+```
 
 <p>At the moment, this is a fairly run-of-the-mill presentation, except that we've added an extra 'content' div as a container inside the 'slide' div. This is so that Fathom.js can use the positioning of 'div.slide' for its calculations, while we're free to modify any elements nested inside it.</p>
 
@@ -83,7 +85,8 @@ categories: []
 
 <p>Knowing this, our first step is to add a perspective to the 'slide' class, which is required before the browser will render transforms in 3D, and a 3D transform to the inactive slide's 'content' class.</p>
 
-<pre>.slide {
+``` css
+.slide {
   -webkit-perspective: 600;
   -moz-perspective: 600;
   -ms-perspective: 600;
@@ -97,11 +100,13 @@ categories: []
   -ms-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
   -o-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
   transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
-}</pre>
+}
+```
 
 <p>Now our slides are facing backwards, tilted back, rotated left, and scaled down to one-tenth size when inactive. This is a pretty good start, especially considering it's only two extra style declarations. Obviously, we're not finished yet since we need to transition between the two states. Let's expand this a little:</p>
 
-<pre>.inactiveslide .content {
+``` css
+.inactiveslide .content {
   -webkit-transition: all 1000ms ease;
   -moz-transition: all 1000ms ease;
   -ms-transition: all 1000ms ease;
@@ -122,7 +127,8 @@ categories: []
   -ms-transition: all 2500ms ease;
   -o-transition: all 2500ms ease;
   transition: all 2500ms ease;
-}</pre>
+}
+```
 
 <p>With a few extra lines (excluding vendor prefixing), we've managed to set up two different transitions for activating and deactivating slides. Obviously, cleaning up this CSS with a pre-processor like <a href="http://sass-lang.com/" target="_blank">SASS</a> or <a href="http://lesscss.org/" target="_blank">LESS</a>, or <a href="http://lea.verou.me/" target="_blank">Lea Verou</a>'s <a href="http://leaverou.github.com/prefixfree/" target="_blank">-prefix-free</a> would be a good idea.</p>
 
@@ -132,7 +138,8 @@ categories: []
 
 <p>If we use the custom easing in our code, it looks like this:</p>
 
-<pre>.inactiveslide .content {
+``` css
+.inactiveslide .content {
   -webkit-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   -moz-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   -ms-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
@@ -153,7 +160,8 @@ categories: []
   -ms-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   -o-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
   transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
-}</pre>
+}
+```
 
 <h3>See It In Action</h3>
 

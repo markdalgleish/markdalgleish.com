@@ -28,11 +28,13 @@ categories: []
 
 <p>Declaring a template:</p>
 
-<pre>$.tmpload('search', 'path/to/search.tmpl');</pre>
+``` js
+$.tmpload('search', 'path/to/search.tmpl');
+```
 
 <p>Declaring groups of templates:</p>
 
-<pre>
+``` js
 $.tmpload([
   {
     name: 'search',
@@ -43,11 +45,13 @@ $.tmpload([
     url: 'path/to/comments.tmpl'
   }
 ]);
-</pre>
+```
 
 <p>Loading the template and caching it, or referencing it in an AJAX 'when' block:</p>
 
-<pre>$.tmpload('search');</pre>
+``` js
+$.tmpload('search');
+```
 
 <p>That's all there is to it! Grab a copy and try it out yourself. I'd love to hear your feedback and suggestions.</p>
 

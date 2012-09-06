@@ -1,6 +1,6 @@
 ---
 layout: post
-title: $(document).ready() for jQuery Mobile
+title: "$(document).ready() for jQuery Mobile"
 date: 2011-04-12 11:56
 comments: true
 categories: []
@@ -19,43 +19,43 @@ categories: []
 
 <p>So selecting the most recent page added to the DOM is pretty straightforward:</p>
 
-<pre>
+``` js
 $("div:jqmData(role='page'):last")
-</pre>
+```
 
 <p>Note that you should always use the ':jqmData' pseudo-selector to ensure your code will still work if jQuery Mobile's data attributes are namespaced.</p>
 
 <p>Having to repeat that constantly in all page-level code is a bit fragile, and more than a little ugly, so let's break this logic out into a standard function which we'll place into our site-wide script file.</p>
 
-<pre>
+``` js
 function pageScript(func) {
   var $context = $("div:jqmData(role='page'):last");
   func($context);
 }
-</pre>
+```
 
 <p>Now that we have a page-level script handler, we wrap all our scripts in an anonymous function with a '$context' parameter which is a reference to the jQuery object for the current page:</p>
 
-<pre>
+``` js
 pageScript(function($context){
   console.log($context);
 });
-</pre>
+```
 
 <p>The equivalent of $(document).ready() is achieved via the 'pagecreate' event:</p>
 
-<pre>
+``` js
 pageScript(function($context){
   $context.bind("pagecreate", function(event, ui) {
     console.log("The page is ready!");
   });
 });
-</pre>
+```
 
 
 <p>The other five jQuery Mobile events available for this DIV can now be bound within this anonymous function:</p>
 
-<pre>
+``` js
 pageScript(function($context){
   $context.bind("pagebeforecreate", function(event, ui) {
     console.log("The DOM is untouched by jQM");
@@ -77,7 +77,7 @@ pageScript(function($context){
     console.log("Hide");
   });
 });
-</pre>
+```
 
 <p>This anonymous function will only run once per page load, so by binding to the event handlers you'll ensure any event-driven logic will continue to run as users navigate your mobile site.</p>
 
