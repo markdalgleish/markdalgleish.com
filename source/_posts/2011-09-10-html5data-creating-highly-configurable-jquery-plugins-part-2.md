@@ -42,7 +42,7 @@ This is no longer in a format that we can merge with our settings through '$.ext
 
 At this stage we could write some custom code to iterate over the object, filter out anything that doesn't begin with 'myplugin', then strip off our namespace and make 'Foo' and 'Bar' lower case. But this is way too much work to do regularly and ideally should be available to us in the form of a jQuery plugin.
 
-This is where the <a href="http://markdalgleish.com/projects/jquery-html5data" target="_blank">$.html5data plugin</a> comes in. Unlike jQuery's 'data' method, it is designed from the ground up to work with HTML5 data attributes. Because it isn't overloaded to read and write data in memory stored against DOM elements, like the 'data' method is, it is able to have an API better suited for data attributes.
+This is where the [$.html5data plugin](http://markdalgleish.com/projects/jquery-html5data) comes in. Unlike jQuery's 'data' method, it is designed from the ground up to work with HTML5 data attributes. Because it isn't overloaded to read and write data in memory stored against DOM elements, like the 'data' method is, it is able to have an API better suited for data attributes.
 
 Using the previous example, if you wanted to get an object containing all the settings that use the 'myplugin' prefix, $.html5data lets you specify the namespace:
 
@@ -59,4 +59,4 @@ This would return the following object, no matter which other data attributes we
 }
 ```
 
-Visit the <a href="http://markdalgleish.com/projects/jquery-html5data" target="_blank">$.html5data project page</a> for more information or <a href="https://github.com/markdalgleish/jquery-html5data" target="_blank">contribute on GitHub</a>.
+Visit the [$.html5data project page](http://markdalgleish.com/projects/jquery-html5data) for more information or [contribute on GitHub](https://github.com/markdalgleish/jquery-html5data).

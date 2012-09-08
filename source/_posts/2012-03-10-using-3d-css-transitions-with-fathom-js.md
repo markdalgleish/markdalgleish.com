@@ -9,7 +9,7 @@ If you've started making presentations using the browser, your work might still 
 
 ## Presenting Fathom.js
 
-<a href="http://markdalgleish.com/projects/fathom" target="_blank">Fathom.js</a>, the jQuery-based presentation framework I created for <a href="http://melbjs.com/" target="_blank">MelbJS</a>, might look fairly simple but its simplicity is deceptive. For example, you can build fairly powerful yet straightforward 3D transitions purely with CSS. It's easier than you might think.
+[Fathom.js](http://markdalgleish.com/projects/fathom), the jQuery-based presentation framework I created for [MelbJS](http://melbjs.com/), might look fairly simple but its simplicity is deceptive. For example, you can build fairly powerful yet straightforward 3D transitions purely with CSS. It's easier than you might think.
 
 It's important to note that Fathom.js uses CSS classes to indicate which slides are active or inactive. By default, all slides have the class of 'slide'. When a slide is active it has the class 'activeslide', and it has the class 'inactive' when (you guessed it) it's inactive. This allows us to add different styles to each state and a transition between them with a few lines of CSS. Now that we have 3D transforms at our disposal, let's create an example 3D transition.
 
@@ -130,11 +130,11 @@ Now our slides are facing backwards, tilted back, rotated left, and scaled down 
 }
 ```
 
-With a few extra lines (excluding vendor prefixing), we've managed to set up two different transitions for activating and deactivating slides. Obviously, cleaning up this CSS with a pre-processor like <a href="http://sass-lang.com/" target="_blank">SASS</a> or <a href="http://lesscss.org/" target="_blank">LESS</a>, or <a href="http://lea.verou.me/" target="_blank">Lea Verou</a>'s <a href="http://leaverou.github.com/prefixfree/" target="_blank">-prefix-free</a> would be a good idea.
+With a few extra lines (excluding vendor prefixing), we've managed to set up two different transitions for activating and deactivating slides. Obviously, cleaning up this CSS with a pre-processor like [SASS](http://sass-lang.com/) or [LESS](http://lesscss.org/), or [Lea Verou](http://lea.verou.me/)'s [-prefix-free](http://leaverou.github.com/prefixfree/) would be a good idea.
 
 ## Easing Into It
 
-Those of us who are used to the custom easing options when animating with jQuery might find the standard easing options with CSS transitions a little lacking. If we want to use one of the classic <a href="http://www.robertpenner.com/easing/" target="_blank">Penner easing methods</a>, made famous with Flash and jQuery (with <a href="http://gsgd.co.uk/sandbox/jquery/easing/" target="_blank">jQuery Easing Plugin</a>), one option is to use one of my favourite online developer tools, <a href="http://matthewlein.com/ceaser/" target="_blank">Ceaser</a>, which allows you to create a custom easing method or select from a set of existing well known easing equations. By selecting 'easeInOutExpo' from the drop down list, we can grab the CSS which provides us with our custom easing bezier curve.
+Those of us who are used to the custom easing options when animating with jQuery might find the standard easing options with CSS transitions a little lacking. If we want to use one of the classic [Penner easing methods](http://www.robertpenner.com/easing/), made famous with Flash and jQuery (with [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)), one option is to use one of my favourite online developer tools, [Ceaser](http://matthewlein.com/ceaser/), which allows you to create a custom easing method or select from a set of existing well known easing equations. By selecting 'easeInOutExpo' from the drop down list, we can grab the CSS which provides us with our custom easing bezier curve.
 
 If we use the custom easing in our code, it looks like this:
 
@@ -165,9 +165,9 @@ If we use the custom easing in our code, it looks like this:
 
 ## See It In Action
 
-You can <a href="http://markdalgleish.com/examples/fathom3d/" target="_blank">see the final result here</a>. Obviously this is fairly basic, but works as a great starting point to expand on the idea further.
+You can [see the final result here](http://markdalgleish.com/examples/fathom3d/). Obviously this is fairly basic, but works as a great starting point to expand on the idea further.
 
-To see another example, I recently gave a presentations at <a href="http://www.webdirections.org/" target="_blank">Web Directions</a>' <a href="http://whatdoyouknow.webdirections.org/" target="_blank">What Do You Know</a> event in Melbourne using these techniques called <a href="http://markdalgleish.com/presentations/embracingtouch" target="_blank">'Embracing Touch: Cross Platform Scroll'</a>.
+To see another example, I recently gave a presentations at [Web Directions](http://www.webdirections.org/)' [What Do You Know](http://whatdoyouknow.webdirections.org/) event in Melbourne using these techniques called ['Embracing Touch: Cross Platform Scroll'](http://markdalgleish.com/presentations/embracingtouch).
 
 ## Wrapping Up
 
