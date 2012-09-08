@@ -13,6 +13,12 @@ deploy_default = "rsync"
 # This will be configured for you when you run config_deploy
 deploy_branch  = "gh-pages"
 
+## -- LFTP Deploy config -- ##
+ftp_user       = "markd"
+ftp_server     = "ftp.markdalgleish.com"
+ftp_target     = "/public_html/"
+deploy_default = "lftp"
+
 ## -- Misc Configs -- ##
 
 public_dir      = "public"    # compiled site directory
@@ -238,6 +244,12 @@ task :rsync do
   end
   puts "## Deploying website via Rsync"
   ok_failed system("rsync -avze 'ssh -p #{ssh_port}' #{exclude} #{"--delete" unless rsync_delete == false} #{public_dir}/ #{ssh_user}:#{document_root}")
+end
+
+desc "Deploy website via LFTP"
+task :lftp do
+  puts "## Deploying website via LFTP"
+  ok_failed system("lftp -e 'mirror -R -v #{public_dir} #{ftp_target}; bye' -u #{ftp_user} #{ftp_server}")
 end
 
 desc "deploy public directory to github pages"
