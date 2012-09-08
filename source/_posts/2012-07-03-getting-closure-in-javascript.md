@@ -17,7 +17,7 @@ Most importantly, my presentation aimed to clear up any confusion around closure
 
 [Web Directions Code 2012](http://code12melb.webdirections.org/) was a fantastic event and I'm greatly looking forward to more in the future. Many thanks, as always, to Maxine Sherrin and John Allsopp for providing such an awesome conference and for their tireless efforts in bolstering the Australian web developer community.
 
-## Further reading:</h3>
+## Further reading:
  * [Slides from this presentation](http://bit.ly/gettingclosure)
  * [Immediately Invoked Function Expressions (IIFE)](http://benalman.com/news/2010/11/immediately-invoked-function-expression/)</a>
  * [Self-executing Anonymous Functions](http://markdalgleish.com/2011/03/self-executing-anonymous-functions/)
