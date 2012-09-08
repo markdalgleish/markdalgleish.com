@@ -16,7 +16,7 @@ deploy_branch  = "gh-pages"
 ## -- LFTP Deploy config -- ##
 ftp_user       = "markd"
 ftp_server     = "ftp.markdalgleish.com"
-ftp_target     = "/public_html/"
+ftp_target     = "/public_html"
 deploy_default = "lftp"
 
 ## -- Misc Configs -- ##
