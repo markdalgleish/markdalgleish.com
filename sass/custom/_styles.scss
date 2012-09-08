@@ -2,8 +2,6 @@
 // Add styles here to make changes without digging in too much
 
 // Style reset
-// aka stop site looking like a 2004 flashback
-// (not that I can do much better)
 
 html,
 body > header,
@@ -122,4 +120,18 @@ aside.sidebar {
 a.dsq-subscribe-email em,
 a.dsq-subscribe-rss em {
 	text-decoration: none !important;
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+	hgroup img {
+		height: 100px;
+		width: 100px;
+		border-radius: 100px;
+		margin: 0 auto 16px;
+	}
+	body > header h1 {
+		font-size: 2.6em;
+	}
 }
