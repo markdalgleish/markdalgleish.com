@@ -42,8 +42,7 @@ body {
 }
 
 body > header {
-	background: #F0F0F0;
-	border-bottom: 1px dotted #CACACA;
+	background: #F0F0F0 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC') bottom left repeat-x;
 }
 
 body > footer {
@@ -81,8 +80,10 @@ a:visited {
 	text-decoration: none;
 	color: #1863A1;
 }
-a:hover {
+a:hover,
+article header h1 a:hover {
 	color: #0181EB;
+	text-decoration: none;
 }
 
 body > header h1 a,
@@ -101,6 +102,12 @@ body > header h2 {
 	font-size: 0.6em;
 	letter-spacing: 0.3em;
 	font-style: italic;
+}
+article h2 {
+	background: none;
+}
+#content .blog-index article {
+	padding-bottom: 2em;
 }
 
 h1, h2, h3, h4, h5, h6 {
