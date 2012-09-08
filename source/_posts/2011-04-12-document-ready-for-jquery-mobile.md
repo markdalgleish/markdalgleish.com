@@ -5,27 +5,27 @@ date: 2011-04-12 11:56
 comments: true
 categories: []
 ---
-<p><a href="http://jquerymobile.com/">jQuery Mobile</a> is a great framework for getting a polished mobile site up and running relatively quickly and easily.</p>
+[jQuery Mobile](http://jquerymobile.com/) is a great framework for getting a polished mobile site up and running relatively quickly and easily.
 
-<p>Due to the way that it injects pages into the DOM using <a href="http://domscripting.com/presentations/xtech2006/">Hijax</a>, our usual techniques for running code against the current page using selectors that traverse the body no longer make sense.</p>
+Due to the way that it injects pages into the DOM using [Hijax](http://domscripting.com/presentations/xtech2006/), our usual techniques for running code against the current page using selectors that traverse the body no longer make sense.
 
-<p>Basically, there isn't a $(document).ready().</p>
+Basically, there isn't a $(document).ready().
 
-<p>It's for this very reason that we can't rely on IDs either, since multiple copies of the same page are likely to exist in the DOM at the same time.</p>
+It's for this very reason that we can't rely on IDs either, since multiple copies of the same page are likely to exist in the DOM at the same time.
 
-<p>So how do we run page-level code against the current page when it's finished loading without the risk of changes to the other pages?</p>
+So how do we run page-level code against the current page when it's finished loading without the risk of changes to the other pages?
 
-<p>If you keep an eye on the DOM in your developer tools while pages are loaded, you'll notice that any new pages are appended in a DIV with an <a href="http://ejohn.org/blog/html-5-data-attributes/">HTML5 data-role attribute</a> value of 'page'. Any code in the page, either in a script block or in an external file, will be executed immediately.</p>
+If you keep an eye on the DOM in your developer tools while pages are loaded, you'll notice that any new pages are appended in a DIV with an [HTML5 data-role attribute](http://ejohn.org/blog/html-5-data-attributes/) value of 'page'. Any code in the page, either in a script block or in an external file, will be executed immediately.
 
-<p>So selecting the most recent page added to the DOM is pretty straightforward:</p>
+So selecting the most recent page added to the DOM is pretty straightforward:
 
 ``` js
 $("div:jqmData(role='page'):last")
 ```
 
-<p>Note that you should always use the ':jqmData' pseudo-selector to ensure your code will still work if jQuery Mobile's data attributes are namespaced.</p>
+Note that you should always use the ':jqmData' pseudo-selector to ensure your code will still work if jQuery Mobile's data attributes are namespaced.
 
-<p>Having to repeat that constantly in all page-level code is a bit fragile, and more than a little ugly, so let's break this logic out into a standard function which we'll place into our site-wide script file.</p>
+Having to repeat that constantly in all page-level code is a bit fragile, and more than a little ugly, so let's break this logic out into a standard function which we'll place into our site-wide script file.
 
 ``` js
 function pageScript(func) {
@@ -34,7 +34,7 @@ function pageScript(func) {
 }
 ```
 
-<p>Now that we have a page-level script handler, we wrap all our scripts in an anonymous function with a '$context' parameter which is a reference to the jQuery object for the current page:</p>
+Now that we have a page-level script handler, we wrap all our scripts in an anonymous function with a '$context' parameter which is a reference to the jQuery object for the current page:
 
 ``` js
 pageScript(function($context){
@@ -42,7 +42,7 @@ pageScript(function($context){
 });
 ```
 
-<p>The equivalent of $(document).ready() is achieved via the 'pagecreate' event:</p>
+The equivalent of $(document).ready() is achieved via the 'pagecreate' event:
 
 ``` js
 pageScript(function($context){
@@ -53,7 +53,7 @@ pageScript(function($context){
 ```
 
 
-<p>The other five jQuery Mobile events available for this DIV can now be bound within this anonymous function:</p>
+The other five jQuery Mobile events available for this DIV can now be bound within this anonymous function:
 
 ``` js
 pageScript(function($context){
@@ -79,6 +79,6 @@ pageScript(function($context){
 });
 ```
 
-<p>This anonymous function will only run once per page load, so by binding to the event handlers you'll ensure any event-driven logic will continue to run as users navigate your mobile site.</p>
+This anonymous function will only run once per page load, so by binding to the event handlers you'll ensure any event-driven logic will continue to run as users navigate your mobile site.
 
-<p>Working with jQuery Mobile can force you to think about your event handling in a completely different way. Once you get your head around it, it allows some very cool functionality with graceful degradation baked right in, so make sure any code you write doesn't force your app to require JavaScript or you'll be fighting against the framework's emphasis on progressive enhancement.</p>
+Working with jQuery Mobile can force you to think about your event handling in a completely different way. Once you get your head around it, it allows some very cool functionality with graceful degradation baked right in, so make sure any code you write doesn't force your app to require JavaScript or you'll be fighting against the framework's emphasis on progressive enhancement.

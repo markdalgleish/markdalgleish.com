@@ -1,2 +1,118 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+// Style reset
+// aka stop site looking like a 2004 flashback
+// (not that I can do much better)
+
+html,
+body > header,
+body > nav,
+body > div,
+body > div > div,
+body > nav li + li,
+body > footer {
+	background: none;
+}
+
+body > nav,
+body > div,
+body > div > div,
+aside.sidebar,
+aside.sidebar section h1,
+aside.sidebar li {
+	border: 0;
+	box-shadow: none;
+}
+
+.toggle-sidebar {
+	display: none;
+}
+
+// My styles
+
+body {
+	background: #fafafa;
+	max-width: 100%;
+}
+
+#main,
+#footer {
+	max-width: 1020px;
+}
+
+body > header {
+	background: #F0F0F0;
+	border-bottom: 1px dotted #CACACA;
+}
+
+body > footer {
+	margin: 0 auto;
+	background: #f0f0f0;
+	border-top: 1px dotted #CACACA;
+}
+body > footer p:last-child {
+	font-family: $serif;
+	margin: 0 auto;
+	max-width: 910px;
+	padding: 14px 0;
+}
+
+hgroup img {
+	display: block;
+	height: 150px;
+	width: 150px;
+	border-radius: 150px;
+	margin: 0 auto 20px;
+}
+
+article header {
+	padding-top: 0;
+}
+
+article header p.meta {
+	position: static;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+a,
+a:visited {
+	text-decoration: none;
+	color: #1863A1;
+}
+a:hover {
+	color: #0181EB;
+}
+
+body > header h1 a,
+body > header h1 a:visited,
+body > header h1 a:hover {
+	color: #303030;
+}
+body > header h1 {
+	display: block;
+	text-align: center;
+	font-size: 3.2em;
+}
+body > header h2 {
+	font-family: georgia, serif;
+	text-align: center;
+	font-size: 0.6em;
+	letter-spacing: 0.3em;
+	font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #303030;
+	font-weight: normal;
+}
+
+aside.sidebar {
+	padding-top: 1.2em;
+}
+
+a.dsq-subscribe-email em,
+a.dsq-subscribe-rss em {
+	text-decoration: none !important;
+}
