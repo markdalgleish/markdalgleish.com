@@ -93,7 +93,7 @@ disqus_short_name: markdalgleish
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-21855678-1
 
 # Facebook Like
 facebook_like: false
