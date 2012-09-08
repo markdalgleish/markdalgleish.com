@@ -58,7 +58,7 @@ default_asides: [asides/recent_posts.html, asides/twitter.html, asides/github.ht
 # ----------------------- #
 
 # Github repositories
-github_user: markdalgleish
+github_user: 
 github_repo_count: 5
 github_show_profile_link: true
 github_skip_forks: true
@@ -68,11 +68,11 @@ twitter_user: markdalgleish
 twitter_tweet_count: 5
 twitter_show_replies: false
 twitter_follow_button: true
-twitter_show_follower_count: false
+twitter_show_follower_count: true
 twitter_tweet_button: true
 
 # Google +1
-google_plus_one: false
+google_plus_one: true
 google_plus_one_size: medium
 
 # Google Plus Profile
