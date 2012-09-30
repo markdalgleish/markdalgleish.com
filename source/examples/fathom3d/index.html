@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fathom.js 3D Transitions</title>
+    <script src="jquery.min.js"></script>
+    <script src="fathom.js"></script>
+    <script>
+      $(function(){
+        $('#presentation').fathom();
+      });
+    </script>
+<style type="text/css">
+body {
+	background-color: #303030;
+}
+.slide {
+	width: 800px;
+	height: 600px;
+	padding: 0;
+	position: relative;
+}
+.slide .content {
+	width: 800px;
+	height: 600px;
+	background-color: #f0f0f0;
+	border-radius: 20px;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	text-align: center;
+	box-shadow: 0 0 100px rgba(0,0,0,0.6);
+	position: absolute;
+	top: 0;
+}
+h1 {
+	color: #303030;
+	font-family: Georgia, Times New Roman, serif;
+	font-size: 72px;
+	text-shadow: 1px 1px 2px #404040;
+}
+p {
+	color: #404040;
+	font-size: 30px;
+	text-shadow: 1px 1px 2px #404040;
+}
+.slide {
+	-webkit-perspective: 600;
+	-moz-perspective: 600;
+	-ms-perspective: 600;
+	-o-perspective: 600;
+	perspective: 600;
+}
+.inactiveslide .content {
+	-webkit-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+	-moz-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	-ms-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	-o-transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	transition: all 1000ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+	-webkit-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
+	-moz-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
+	-ms-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
+	-o-transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
+	transform: rotateY(180deg) rotateX(-60deg) rotateZ(20deg) scale(0.1);
+	opacity: 0;
+}
+.activeslide .content {
+	-webkit-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+	-moz-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	-ms-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	-o-transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000); 
+	transition: all 2500ms cubic-bezier(1.000, 0.000, 0.000, 1.000);
+}
+</style>
+</head>
+<body>
+
+	<div id="presentation">
+
+		<div class="slide">
+			<div class="content">
+				<h1>Hello there</h1>
+				<p>This is a test slide. In 3D.</p>
+			</div>
+		</div>
+
+		<div class="slide">
+			<div class="content">
+				<h1>Hello there</h1>
+				<p>This is a test slide. In 3D.</p>
+			</div>
+		</div>
+
+		<div class="slide">
+			<div class="content">
+				<h1>Hello there</h1>
+				<p>This is a test slide. In 3D.</p>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
