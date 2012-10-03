@@ -83,7 +83,7 @@ The code in *script.js* initialises Stellar.js, which activates all elements wit
 $(function(){
   $.stellar({
     horizontalScrolling: false,
-    verticalOffset: 200
+    verticalOffset: 150
   });
 });
 ```
@@ -271,19 +271,19 @@ When using Stellar.js' default settings, it's equivalent to writing this code:
 
 ``` js
 $(window).stellar({
-  positionProperty: 'scroll'
+  scrollProperty: 'scroll'
 });
 ```
 
-Here you can see that we've specified that *"window"* is the source of our scrolling, and we read its scroll position using the *"scroll"* position property adapter.
+Here you can see that we've specified that *"window"* is the source of our scrolling, and we read its scroll position using the *"scroll"* scroll property adapter.
 
 Once we use iScroll, there is no longer a *scroll position* in the traditional sense. Native scroll is being simulated by moving the *"scroller"* div inside the *"wrapper"* div using CSS3 transforms.
 
-Thankfully, Stellar.js has a *"transform"* adapter to cover this exact case. All we have to do is point Stellar.js at the div being moved, and specify which *"positionProperty"* to use:
+Thankfully, Stellar.js has a *"transform"* adapter to cover this exact case. All we have to do is point Stellar.js at the div being moved, and specify which *"scrollProperty"* to use:
 
 ``` js
 $('#scroller').stellar({
-  positionProperty: 'transform'
+  scrollProperty: 'transform'
 });
 ```
 
