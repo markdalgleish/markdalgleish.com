@@ -35,10 +35,13 @@ Actor.prototype.act = function(line) {
 From here it only gets worse when multiple inheritance is involved:
 
 ``` js
+function Actor(name) {
+    this.name = name;
+}
 Actor.prototype.canSpeak = true;
 
-function SilentActor(name) {
-    this.name = name;
+function SilentActor() {
+    Actor.apply(this, arguments);
 }
 SilentActor.prototype = new Actor();
 SilentActor.prototype.canSpeak = false;
@@ -141,6 +144,10 @@ They both allow us to run a function in a specific context which we provide as t
 Using our *'silentActor'* example, if we want to achieve the equivalent of calling *'super'*, it looks something like this:
 
 ``` js
+actor.act = function(line) {
+    alert(this.name + ': ' + line);
+}
+
 silentActor.act = function(line) {
     // Super:
     actor.act.call(this, line);
@@ -256,6 +263,7 @@ function Actor() {}
 Actor.prototype.canAct = true;
 
 // Set up SilentActor to inherit from Actor:
+function SilentActor() {}
 SilentActor.prototype = Object.create(Actor.prototype);
 
 // We can now add new properties to the SilentActor prototype:
