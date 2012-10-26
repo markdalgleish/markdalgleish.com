@@ -139,7 +139,7 @@ In JavaScript we have even more options: *we can run any function in any context
 
 How do we achieve this? Using JavaScript's [*'call'*](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/call) and [*'apply'*](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/apply) methods which are available on all functions. Appropiately enough, these are available because they exist on the 'Function' prototype.
 
-They both allow us to run a function in a specific context which we provide as the fist parameter, along with any arguments we wish to pass to the function.
+They both allow us to run a function in a specific context which we provide as the first parameter, along with any arguments we wish to pass to the function.
 
 Using our *'silentActor'* example, if we want to achieve the equivalent of calling *'super'*, it looks something like this:
 
@@ -185,7 +185,7 @@ function makeActor(name) {
 
 ## Understanding prototypes with a touch of class
 
-Now that we've seen how simple object-to-object inheritance can be, it's time to look on our original example again with fresh eyes:
+Now that we've seen how simple object-to-object inheritance can be, it's time to look at our original example again with fresh eyes:
 
 ``` js
 var charlie = new Actor();
@@ -215,7 +215,7 @@ The funny thing about JavaScript is that *any* function can be used as a constru
 
 Since any function can be a constructor, all functions have a *'prototype'* property just in case they're used as a constructor. Even when it doesn't make sense.
 
-Perfect example is the [*'alert'*](https://developer.mozilla.org/en-US/docs/DOM/window.alert) function, which is provided by the browser. Even though it's not meant to be used as a constructor (in fact, the browser won't even let you), it still has a *'prototype'* property:
+A perfect example is the [*'alert'*](https://developer.mozilla.org/en-US/docs/DOM/window.alert) function, which is provided by the browser. Even though it's not meant to be used as a constructor (in fact, the browser won't even let you), it still has a *'prototype'* property:
 
 ``` js
 typeof alert.prototype; // 'object'
@@ -223,7 +223,7 @@ typeof alert.prototype; // 'object'
 new alert(); // TypeError: Illegal invocation
 ```
 
-When *'Actor'* used as a constructor, our new *'charlie'* object inherits from the object sitting at *'Actor.prototype'*.
+When *'Actor'* is used as a constructor, our new *'charlie'* object inherits from the object sitting at *'Actor.prototype'*.
 
 ## Functions are objects
 
@@ -277,7 +277,7 @@ charlie.canSpeak; // false
 
 ## Construction: Just 3 simple steps
 
-At this point, it's important to point out what's going on inside a constructor. Instantiating a new object with a "constructor" performs three actions and, as an example, let's take a look at what happens with our actor example:
+At this point, it's important to point out what's going on inside a constructor. Instantiating a new object with a "constructor" performs three actions and, as an example, let's take a look at what happens with our *'Actor'* constructor:
 
 ``` js
 var charlie = new Actor();
