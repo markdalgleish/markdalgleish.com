@@ -12,7 +12,7 @@ In the world of modern, evergreen and mobile browsers, this was a necessary move
 
 Where previously we could simply require the most recent version of jQuery, we are now likely to want to support both 1.9.x and 2.x, allowing our plugins to work everywhere from IE6 to the most bleeding edge browsers.
 
-To facilitate this, we'll run through the creation of a plugin using the popular JavaScript built tool, [Grunt](http://gruntjs.com/). We'll then configure our unit tests to run automatically across multiple versions of jQuery.
+To facilitate this, we'll run through the creation of a plugin using the popular JavaScript build tool, [Grunt](http://gruntjs.com/). We'll then configure our unit tests to run automatically across multiple versions of jQuery.
 
 ## A simple jQuery plugin
 
