@@ -49,6 +49,7 @@ body > footer {
 	border-top: 1px dotted #CACACA;
 }
 body > footer p:last-child {
+	text-shadow: none;
 	font-family: $serif;
 	margin: 0 auto;
 	max-width: 910px;
@@ -115,6 +116,12 @@ h1, h2, h3, h4, h5, h6 {
 
 aside.sidebar {
 	padding-top: 1.2em;
+}
+
+.sharing {
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAABCAYAAACsXeyTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAFUlEQVQIHWNIS0sr/v//PwMMDzY+ADqMahlW4J91AAAAAElFTkSuQmCC') top left repeat-x;
+	margin-top: 3em;
+	padding-top: 1em;
 }
 
 a.dsq-subscribe-email em,
