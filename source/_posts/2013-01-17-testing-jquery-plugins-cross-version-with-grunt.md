@@ -224,7 +224,7 @@ Since there will be a lot of repetition in the URLs, let's clean it up with use 
 qunit: {
   urls: ['1.9.0', '2.0.0b1'].map(function(version) {
     return 'http://localhost:<%= server.port %>/test/plugin.html?jquery=' + version;
-  });
+  })
 },
 ```
 
