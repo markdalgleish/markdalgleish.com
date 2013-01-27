@@ -287,6 +287,21 @@ $('#scroller').stellar({
 });
 ```
 
+## Performant positioning in Mobile WebKit
+
+Repositioning elements rapidly is fairly demanding on mobile devices. In order to achieve a seamless effect, we need to ensure that our parallax effects are hardware accelerated.
+
+In WebKit, [hardware acceleration is triggered by using "translate3d"](http://davidwalsh.name/translate3d). Stellar.js provides support for this method of positioning via the "transform" position property adapter:
+
+``` js
+$('#scroller').stellar({
+  scrollProperty: 'transform',
+  positionProperty: 'transform'
+});
+```
+
+By using this adapter, our parallax effects should now be as smooth as possible.
+
 ## Hooking Stellar.js up to iScroll
 
 Now that we've seen all the individual pieces needed to make our JavaScript work, it's time to see the final *script.js* in its entirety:
@@ -308,6 +323,7 @@ Now that we've seen all the individual pieces needed to make our JavaScript work
 
       $('#scroller').stellar({
         scrollProperty: 'transform',
+        positionProperty: 'transform',
         horizontalScrolling: false,
         verticalOffset: 150
       });
@@ -353,3 +369,5 @@ If you [take a look at the final page](/examples/mobileparallax/), you'll see we
 From here we have a base to play with our parallax site, while ensuring it works correctly cross-platform. At this point, if you haven't already, it's a good idea to read through the [Stellar.js documentation](markdalgleish.com/projects/stellar.js/docs/) to get a better idea of the control you have over the effect.
 
 Have you made a cross-platform parallax site with Stellar.js? [Let me know on Twitter](http://twitter.com/markdalgleish), or post a link in the comments.
+
+*Update (27 Jan 2013): This article now reflects changes made in Stellar.js v0.6*
