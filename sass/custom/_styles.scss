@@ -72,6 +72,16 @@ article header p.meta {
 	position: static;
 	margin-top: 1em;
 	margin-bottom: 1em;
+	font-family: georgia, serif;
+	font-size: 0.7em;
+	letter-spacing: 0.2em;
+	font-style: italic;
+	text-transform: none;
+
+	span {
+		vertical-align: super;
+		font-size: 0.5em
+	}
 }
 
 a,
@@ -102,6 +112,15 @@ body > header h2 {
 	letter-spacing: 0.3em;
 	font-style: italic;
 }
+
+aside.sidebar section {
+	font-family: $serif;
+}
+
+aside.sidebar section h1 {
+	padding-bottom: 0.6em;
+}
+
 article h2 {
 	background: none;
 }
