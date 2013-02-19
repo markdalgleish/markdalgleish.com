@@ -16,15 +16,21 @@ Luckily, [Ben Alman](http://benalman.com) has created [Grunt](http://gruntjs.com
 
 Grunt is pitched as a replacement for the usual [Make](http://www.gnu.org/software/make/)/[Jake](https://github.com/mde/jake)/[Cake](http://coffeescript.org/documentation/docs/cake.html) style of tool by encouraging the use and development of [plugins](http://gruntjs.com).
 
-A handful of plugins are included by default, but it's the [init task](https://github.com/cowboy/grunt/blob/master/docs/task_init.md) that is the most powerful for those just starting out with Grunt. You can use this task to create a new Gruntfile, or to generate scaffolding for jQuery, [CommonJS](http://www.commonjs.org/) and Node.js projects.
+A handful of plugins are officially maintained by the Grunt team, but it's the [Grunt-init task](https://github.com/gruntjs/grunt-init) that is the most powerful for those just starting out with Grunt. You can use this task to create a new Gruntfile, or to generate scaffolding for jQuery, [CommonJS](http://www.commonjs.org/) and Node.js projects.
 
-To get started (assuming you have Node.js installed), first install Grunt:
+To get started (assuming you have [Git](http://git-scm.com/) and Node.js installed), first install Grunt:
 
 ``` bash
-npm install -g grunt
+npm install -g grunt-init grunt-cli
 ```
 
-This will install Grunt globally, and expose the 'grunt' command line tool.
+This will install the Grunt CLI tool and Grunt-init globally, exposing the 'grunt' and 'grunt-init' commands respectively.
+
+To complete our setup, we need to install the [Grunt-init Node template](https://github.com/gruntjs/grunt-init-node) into our *'~/.grunt-init'* directory using Git:
+
+``` bash
+$ git clone git@github.com:gruntjs/grunt-init-node.git ~/.grunt-init/node
+```
 
 ## Scaffolding our module
 
@@ -35,22 +41,35 @@ To begin, we'll initialise a new Node project:
 ``` bash
 $ mkdir palindrode
 $ cd palindrode
-$ grunt init:node
+$ grunt-init node
 ```
 
-At this point, Grunt will ask a series of questions, most of which have sensible defaults based on your system. Grunt even detects that our module is called 'palindrode' based on the current directory. Upon answering them, the scaffolding for our new project is created:
+At this point, Grunt-init will ask a series of questions, most of which have sensible defaults based on your system. Grunt-init even detects that our module is called 'palindrode' based on the current directory. Upon answering them, the scaffolding for our new project is created:
 
 ``` bash
-Writing .npmignore...OK
-Writing grunt.js...OK
-Writing lib/palindrode.js...OK
+Writing .gitignore...OK
+Writing .jshintrc...OK
+Writing Gruntfile.js...OK
 Writing README.md...OK
+Writing lib/palindrode.js...OK
 Writing test/palindrode_test.js...OK
 Writing LICENSE-MIT...OK
+Writing package.json...OK
 
 Initialized from template "node".
+You should now install project dependencies with npm install. After that, you
+may execute project tasks with grunt. For more information about installing
+and configuring Grunt, please see the Getting Started guide:
+
+http://gruntjs.com/getting-started
 
 Done, without errors.
+```
+
+As the instructions have just informed us, we need to install our Node dependencies:
+
+``` bash
+$ npm install
 ```
 
 The code for our module goes in the newly generated *lib/palindrode.js*, and the tests go in *test/palindrode_test.js*.
@@ -58,10 +77,10 @@ The code for our module goes in the newly generated *lib/palindrode.js*, and the
 Just to get used to the testing workflow, we can test our sample code:
 
 ``` bash
-$ grunt test
-Running "test:files" (test) task
+$ grunt nodeunit
+Running "nodeunit:files" (nodeunit) task
 Testing palindrode_test.js.OK
->> 1 assertions passed (2ms)
+>> 1 assertions passed (4ms)
 
 Done, without errors.
 ```
@@ -73,6 +92,8 @@ Currently there is only one test, and the placeholder code to make the test pass
 Our test file, *test/palindrode_test.js*, already contains a placeholder test, including a Nodeunit reference:
 
 ``` js
+'use strict';
+
 var palindrode = require('../lib/palindrode.js');
 
 /*
@@ -105,13 +126,16 @@ exports['awesome'] = {
     // tests here
     test.equal(palindrode.awesome(), 'awesome', 'should be awesome.');
     test.done();
-  }
+  },
 };
+
 ```
 
 Let's strip this back to a couple of simple palindrome tests:
 
 ``` js
+'use strict';
+
 var palindrode = require('../lib/palindrode.js');
 
 exports['test'] = {
@@ -131,11 +155,10 @@ exports['test'] = {
 If we run the tests now, you'll find they fail:
 
 ``` bash
-$ grunt test
-Running "test:files" (test) task
-Testing palindrode_test.jsFF
+$ grunt nodeunit
+Running "nodeunit:files" (nodeunit) task
 ...
-<WARN> 4/4 assertions failed (6ms) Use --force to continue. </WARN>
+Warning: 4/4 assertions failed (13ms) Use --force to continue.
 
 Aborted due to warnings.
 ```
@@ -147,9 +170,11 @@ To make our tests pass, we need to edit our *lib/palindrode.js*, which currently
  * palindrode
  * https://github.com/markdalgleish/palindrode
  *
- * Copyright (c) 2012 Mark Dalgleish
+ * Copyright (c) 2013 Mark Dalgleish
  * Licensed under the MIT license.
  */
+
+'use strict';
 
 exports.awesome = function() {
   return 'awesome';
@@ -170,10 +195,10 @@ exports.test = function(string) {
 This is enough to pass our two tests:
 
 ``` bash
-$ grunt test
-Running "test:files" (test) task
+$ grunt nodeunit
+Running "nodeunit:files" (nodeunit) task
 Testing palindrode_test.js..OK
->> 2 assertions passed (3ms)
+>> 2 assertions passed (6ms)
 
 Done, without errors.
 ```
@@ -204,9 +229,10 @@ Let's write a few more tests to make sure that our function is a bit more resili
 Of course, these new tests won't pass:
 
 ``` bash
-$ grunt test
+$ grunt nodeunit
+Running "nodeunit:files" (nodeunit) task
 ...
-<WARN> 6/8 assertions failed (9ms) Use --force to continue. </WARN>
+Warning: 6/8 assertions failed (30ms) Use --force to continue.
 ```
 
 Let's upgrade Palindrode's *test* function to pass these new tests:
@@ -228,10 +254,10 @@ exports.test = function(string) {
 Our new tests now pass with flying colours:
 
 ``` bash
-$ grunt test
-Running "test:files" (test) task
+$ grunt nodeunit
+Running "nodeunit:files" (nodeunit) task
 Testing palindrode_test.js.....OK
->> 6 assertions passed (3ms)
+>> 6 assertions passed (6ms)
 
 Done, without errors.
 ```
@@ -263,13 +289,13 @@ exports.test = function(string) {
 
 With Grunt's help, writing a lightweight, tested module is incredibly easy.
 
-It's just as easy to include more tasks in our build to improve the quality of our module. For example, we can run our code through [JSHint](http://www.jshint.com) with the built-in *lint* task. By default, if a Gruntfile exists in the current directory, running *grunt* with no parameters runs the *lint* and *test* tasks.
+It's just as easy to include more tasks in our build to improve the quality of our module. For example, we can run our code through [JSHint](http://www.jshint.com) with the built-in *jshint* task. By default, if a Gruntfile exists in the current directory, running *grunt* with no parameters runs the *jshint* and *nodeunit* tasks.
 
 If we wanted, the code is also ready to be published to npm using the *npm publish* command.
 
 ## Testing continuously
 
-We now have some tests and the code to make it pass. Thanks to Grunt, we also have a *package.json* file which specifies all our dependencies, and indicates that the [*npm test*](https://npmjs.org/doc/test.html) script should run *grunt test*.
+We now have some tests and the code to make it pass. Thanks to Grunt, we also have a *package.json* file which specifies all our dependencies, and indicates that the [*npm test*](https://npmjs.org/doc/test.html) script should run *grunt nodeunit*.
 
 All of this allows us to take advantage of [Travis CI](http://travis-ci.org/), a web-based continuous integration service.
 
@@ -277,24 +303,23 @@ There's a few things we need to do to make this happen.
 
 First, our code needs to be hosted on [GitHub](https://www.github.com).
 
-Next we create a file called *.travis.yml*, and add the following to it:
+Next we create a file called *.travis.yml*, and specify that this is a Node.js project:
 
 ```
 language: node_js
 
 node_js:
-  - 0.6
   - 0.8
 ```
 
-Here we have specified that this is a Node.js project, and that we want to test it in versions 0.6 and 0.8.
-
 The final step is to log in to [Travis CI](http://travis-ci.org/) using our GitHub account. On your Travis profile page you will see a list of public repositories, each with a switch to activate GitHub's service hook.
 
-Once activated, any time you push module updates to GitHub, the *npm test* script, which in turn calls onto *grunt test*, will be run in the cloud. If the build fails, we get notified via email.
+Once activated, any time you push module updates to GitHub, the *npm test* script, which in turn calls onto *grunt nodeunit*, will be run in the cloud. If the build fails, we get notified via email.
 
 ## Moving forward
 
 With all of this in place, we now have a solid, tested module. Maintaining the quality of your module is simple, and thanks to GitHub's new [Commit Status API](https://github.com/blog/1227-commit-status-api), Travis CI can now [run your test suite against all pull requests](http://about.travis-ci.org/blog/2012-09-04-pull-requests-just-got-even-more-awesome/).
 
 To see a simple example of this setup in one of my own projects, check out [lanyrd-scraper](https://github.com/markdalgleish/node-lanyrd-scraper), a Node module for loading event data from [Lanyrd.com](http://lanyrd.com).
+
+*Update (19 Feb 2013): This article now reflects changes made in Grunt v0.4*
