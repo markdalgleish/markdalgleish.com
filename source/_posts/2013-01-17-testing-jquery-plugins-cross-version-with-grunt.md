@@ -16,12 +16,20 @@ To facilitate this, we'll run through the creation of a plugin using the popular
 
 ## A simple jQuery plugin
 
-*It's worth noting that, if you have an existing plugin that doesn't use Grunt, I'd suggest running through these steps in a clean directory and porting the resultant code into your project (with some manual tweaks, of course).*
+*Note: If you have an existing plugin that doesn't use Grunt, I'd suggest running through these steps in a clean directory and porting the resultant code into your project (with some manual tweaks, of course).*
 
-Assuming you already have [Node.js installed](http://nodejs.org/), we first need Grunt installed globally. Even if you already have Grunt available, run the following command to ensure you have the latest version:
+Assuming you already have [Git](http://git-scm.com/) and [Node.js](http://nodejs.org/), we first need [Grunt-init](https://github.com/gruntjs/grunt-init) and the [Grunt command line interface](https://github.com/gruntjs/grunt-cli) installed globally. Run the following command to ensure you have the latest version:
 
 ```bash
-$ npm install -g grunt
+$ npm install -g grunt-init grunt-cli
+```
+
+*Note: If you already have an older version of Grunt installed, you'll need to first remove it with `npm uninstall -g grunt`.*
+
+We also need to install the [*'grunt-init-jquery'*](https://github.com/gruntjs/grunt-init-jquery) template into our *'~/.grunt-init'* directory by cloning the repository:
+
+```bash
+git clone git@github.com:gruntjs/grunt-init-jquery.git ~/.grunt-init/jquery
 ```
 
 We can now scaffold a new jQuery project:
@@ -29,10 +37,16 @@ We can now scaffold a new jQuery project:
 ```bash
 $ mkdir jquery.plugin
 $ cd jquery.plugin
-$ grunt init:jquery
+$ grunt-init jquery
 ```
 
 Once we've responded to all the prompts, we're left with a basic jQuery plugin with [QUnit](http://qunitjs.com/) tests.
+
+Before we continue, we need to install our Node dependencies by running the following command from within our new plugin directory:
+
+```bash
+$ npm install
+```
 
 We can run our placeholder tests like so:
 
@@ -40,8 +54,8 @@ We can run our placeholder tests like so:
 $ grunt qunit
 
   Running "qunit:files" (qunit) task
-  Testing plugin.html....OK
-  >> 4 assertions passed (32ms)
+  Testing test/plugin.html....OK
+  >> 5 assertions passed (51ms)
 
   Done, without errors.
 ```
@@ -52,7 +66,7 @@ Before we make changes to our placeholder project, it's worth having a closer lo
 
 ## Inspecting the build
 
-All of the configuration for our Grunt build process sits inside *'grunt.js'* in our project directory.
+All of the configuration for our Grunt build process sits inside our Gruntfile *(Gruntfile.js)* in our project directory.
 
 We have *'qunit'* configuration, which looks for all QUnit files in the *'test'* directory:
 
@@ -70,7 +84,7 @@ At the end of our Grunt configuration is the definition of our default task:
 
 ```js
 // Default task.
-grunt.registerTask('default', 'lint qunit concat min');
+grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
 ```
 
 The default task is run when the *'grunt'* command is executed without any arguments:
@@ -91,7 +105,7 @@ The QUnit test for our plugin resides in *'test/plugin.html'*. Its default marku
   <title>Plugin Test Suite</title>
   <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
   <script src="../libs/jquery-loader.js"></script>
-  <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
+  <!-- Load local QUnit. -->
   <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
   <script src="../libs/qunit/qunit.js"></script>
   <!-- Load local lib and tests. -->
@@ -99,15 +113,11 @@ The QUnit test for our plugin resides in *'test/plugin.html'*. Its default marku
   <script src="plugin_test.js"></script>
   <!-- Removing access to jQuery and $. But it'll still be available as _$, if
        you REALLY want to mess around with jQuery in the console. REMEMBER WE
-       ARE TESTING YOUR PLUGIN HERE -->
+       ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
   <script>window._$ = jQuery.noConflict(true);</script>
 </head>
 <body>
-  <h1 id="qunit-header">Plugin Test Suite</h1>
-  <h2 id="qunit-banner"></h2>
-  <div id="qunit-testrunner-toolbar"></div>
-  <h2 id="qunit-userAgent"></h2>
-  <ol id="qunit-tests"></ol>
+  <div id="qunit"></div>
   <div id="qunit-fixture">
     <span>lame test markup</span>
     <span>normal test markup</span>
@@ -123,15 +133,13 @@ You'll notice, the first script file included is *'../libs/jquery-loader.js'*. I
 
 ```js
 (function() {
+  // Default to the local version.
+  var path = '../libs/jquery/jquery.js';
   // Get any jquery=___ param from the query string.
   var jqversion = location.search.match(/[?&]jquery=(.*?)(?=&|$)/);
-  var path;
+  // If a version was specified, use that version from code.jquery.com.
   if (jqversion) {
-    // A version was specified, load that version from code.jquery.com.
     path = 'http://code.jquery.com/jquery-' + jqversion[1] + '.js';
-  } else {
-    // No version was specified, load the local version.
-    path = '../libs/jquery/jquery.js';
   }
   // This is the only time I'll ever use document.write, I promise!
   document.write('<script src="' + path + '"></script>');
@@ -144,29 +152,47 @@ Doing this will cause a hosted version of our specified version of jQuery to be 
 
 ## Preparing the build
 
-You might think that we could simply modify the QUnit file matcher in *'grunt.js'* to add a query string, but this won't work. Files must exist on the file system, and query strings aren't part of that vocabulary.
+You might think that we could simply modify the QUnit file matcher in our Gruntfile to add a query string, but this won't work. Files must exist on the file system, and query strings aren't part of that vocabulary.
 
 To automatically run our tests with different query strings, we first need to host our test on a local server.
 
-Luckily, Grunt includes a *'server'* task which does the work for us. We can configure our server by adding the following task configuration to *'grunt.js'*:
+Luckily, Grunt has an [officially-supported *'connect'* task](https://github.com/gruntjs/grunt-contrib-connect) which does the work for us by running a server using [Connect](http://www.senchalabs.org/connect/).
+
+To install the *'grunt-contrib-connect'* Grunt plugin, we need to install it, and automatically save it as a development dependency in our [*'package.json'*](http://package.json.nodejitsu.com/) file:
+
+```bash
+$ npm install --save-dev grunt-contrib-connect
+```
+
+Before we can use this Grunt plugin, we need to register it with Grunt by adding the following line to our Gruntfile's *'loadNpmTasks'*:
+
+```bash
+grunt.loadNpmTasks('grunt-contrib-connect');
+```
+
+We can configure our server by adding the following task configuration to our Gruntfile:
 
 ```js
-server: {
-  port: 8085 // This is a random port, feel free to change it.
+connect: {
+  server: {
+    options: {
+      port: 8085 // This is a random port, feel free to change it.
+    }
+  }
 },
 ```
 
-If we modify our default task to first include our newly configured *'server'* task, this server will start every time the default task is executed, and stopped when the build has completed:
+If we modify our default task to first include our newly configured *'connect'* task, this server will start every time the default task is executed, and stopped when the build has completed:
 
 ```js
 // Default task.
-grunt.registerTask('default', 'server lint qunit concat min');
+grunt.registerTask('default', ['connect', jshint', 'qunit', 'clean', 'concat', 'uglify']);
 ```
 
 Since we want to be able to test our plugin without having to concatenate and minify it, I recommend adding the following *'test'* task:
 
 ```js
-grunt.registerTask('test', 'server lint qunit');
+grunt.registerTask('test', ['connect', 'jshint', 'qunit']);
 ```
 
 We can now lint and test our code from the command line like so:
@@ -177,7 +203,7 @@ $ grunt test
 
 ## Configuring the test URLs
 
-So far we have a local server running every time we trigger a build, and we have a *'test'* task which will run the server before linting our code and running our QUnit tests.
+So far we have a local Connect server running every time we trigger a build, and we have a *'test'* task which will run the server before linting our code and running our QUnit tests.
 
 However, you'll find that we're still pointing QUnit at the file system. Instead, we want it to point to our new server.
 
@@ -185,7 +211,13 @@ To achieve this, we'll pass QUnit an array of URLs rather than files:
 
 ```js
 qunit: {
-  urls: ['http://localhost:<%= server.port %>/test/plugin.html']
+  all: {
+    options: {
+      urls: [
+        'http://localhost:<%= connect.server.options.port %>/test/plugin.html'
+      ]
+    }
+  }
 },
 ```
 
@@ -194,15 +226,21 @@ Now when we run our tests, we should basically see the same result as before:
 ```bash
 $ grunt test
 
-  Running "server" task
-  Starting static web server on port 8085.
+  Running "connect:server" (connect) task
+  Starting connect web server on localhost:8085.
 
-  Running "lint:files" (lint) task
-  Lint free.
+  Running "jshint:gruntfile" (jshint) task
+  >> 1 file lint free.
 
-  Running "qunit:urls" (qunit) task
-  Testing plugin.html....OK
-  >> 4 assertions passed (29ms)
+  Running "jshint:src" (jshint) task
+  >> 1 file lint free.
+
+  Running "jshint:test" (jshint) task
+  >> 1 file lint free.
+
+  Running "qunit:all" (qunit) task
+  Testing http://localhost:8085/test/plugin.html....OK
+  >> 5 assertions passed (41ms)
 
   Done, without errors.
 ```
@@ -211,10 +249,14 @@ You'll notice that this time, QUnit is accessing a URL instead of a file. This m
 
 ```js
 qunit: {
-  urls: [
-    'http://localhost:<%= server.port %>/test/plugin.html?jquery=1.9.0',
-    'http://localhost:<%= server.port %>/test/plugin.html?jquery=2.0.0b1'
-  ]
+  all: {
+    options: {
+      urls: [
+        'http://localhost:<%= connect.server.options.port %>/test/plugin.html?jquery=1.9.0',
+        'http://localhost:<%= connect.server.options.port %>/test/plugin.html?jquery=2.0.0b1'
+      ]
+    }
+  }
 },
 ```
 
@@ -222,9 +264,13 @@ Since there will be a lot of repetition in the URLs, let's clean it up with use 
 
 ```js
 qunit: {
-  urls: ['1.9.0', '2.0.0b1'].map(function(version) {
-    return 'http://localhost:<%= server.port %>/test/plugin.html?jquery=' + version;
-  })
+  all: {
+    options: {
+      urls: ['1.9.0', '2.0.0b1'].map(function(version) {
+        return 'http://localhost:<%= connect.server.options.port %>/test/plugin.html?jquery=' + version;
+      })
+    }
+  }
 },
 ```
 
@@ -233,16 +279,22 @@ If we run our tests, you'll see multiple URLs have been loaded, and twice as man
 ```bash
 $ grunt test
 
-  Running "server" task
-  Starting static web server on port 8085.
+  Running "connect:server" (connect) task
+  Starting connect web server on localhost:8085.
 
-  Running "lint:files" (lint) task
-  Lint free.
+  Running "jshint:gruntfile" (jshint) task
+  >> 1 file lint free.
 
-  Running "qunit:urls" (qunit) task
-  Testing plugin.html?jquery=1.9.0....OK
-  Testing plugin.html?jquery=2.0.0b1....OK
-  >> 8 assertions passed (56ms)
+  Running "jshint:src" (jshint) task
+  >> 1 file lint free.
+
+  Running "jshint:test" (jshint) task
+  >> 1 file lint free.
+
+  Running "qunit:all" (qunit) task
+  Testing http://localhost:8085/test/plugin.html?jquery=1.9.0....OK
+  Testing http://localhost:8085/test/plugin.html?jquery=2.0.0b1....OK
+  >> 10 assertions passed (98ms)
 
   Done, without errors.
 ```
@@ -255,15 +307,13 @@ It's a good idea to add each major supported version of jQuery to your *'lib/jqu
 
 ```js
 (function() {
+  // Default to the local version.
+  var path = '../libs/jquery/jquery.js';
   // Get any jquery=___ param from the query string.
   var jqversion = location.search.match(/[?&]jquery=(.*?)(?=&|$)/);
-  var path;
+  // If a version was specified, use that version from code.jquery.com.
   if (jqversion) {
-    // A version was specified, load that specific version.
     path = '../libs/jquery/jquery-' + jqversion[1] + '.js';
-  } else {
-    // No version was specified, load the default version.
-    path = '../libs/jquery/jquery.js';
   }
   // This is the only time I'll ever use document.write, I promise!
   document.write('<script src="' + path + '"></script>');
@@ -283,7 +333,7 @@ node_js:
   - 0.8
 ```
 
-Then, set the [*'npm test'*](https://npmjs.org/doc/test.html) script in your [*'package.json'*](http://package.json.nodejitsu.com/) file to run our new Grunt *'test'* task:
+Then, set the [*'npm test'*](https://npmjs.org/doc/test.html) script in your *'package.json'* file to run our new Grunt *'test'* task:
 
 ```js
 // Snip...
@@ -303,22 +353,4 @@ Now that we have a framework for testing multiple versions, it's worth testing t
 
 At a minimum, I'd recommend testing in 1.9.x and 2.x to ensure that any differences between the two versions don't inadvertently break your plugin. Since both versions will be developed in parallel as long as old versions of IE maintain significant market share, it's the least we can do for our users.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*Update (19 Feb 2013): This article now reflects changes made in Grunt v0.4*
